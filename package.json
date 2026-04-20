@@ -1,0 +1,17 @@
+{
+  "name": "pi-hotkey-commands",
+  "version": "1.0.0",
+  "description": "Pi extension to bind slash commands to keyboard shortcuts via config file",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sviataslau/pi-hotkey-commands"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*"
+  },
+  "pi": {
+    "extensions": ["./index.ts"]
+  }
+}
