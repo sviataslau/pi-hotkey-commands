@@ -1,6 +1,6 @@
 # pi-hotkey-commands
 
-A [pi](https://github.com/nichochar/pi-coding-agent) extension that binds slash commands to keyboard shortcuts. Everything is managed through a simple JSON config file.
+A [pi](https://pi.dev/) extension that binds slash commands to keyboard shortcuts. Everything is managed through a simple JSON config file.
 
 ## Installation
 
@@ -41,11 +41,6 @@ Create a config file at either location (project-local overrides global):
       "shortcut": "ctrl+shift+r",
       "command": "/plannotator-review",
       "description": "Run plannotator review"
-    },
-    {
-      "shortcut": "ctrl+shift+d",
-      "command": "/deploy staging",
-      "description": "Deploy to staging"
     }
   ]
 }
