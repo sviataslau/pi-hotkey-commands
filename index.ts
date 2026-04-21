@@ -13,12 +13,12 @@
  * {
  *   "bindings": [
  *     {
- *       "shortcut": "ctrl+super+r",
+ *       "shortcut": "ctrl+shift+r",
  *       "command": "/plannotator-review",
  *       "description": "Run plannotator review"
  *     },
  *     {
- *       "shortcut": "ctrl+super+d",
+ *       "shortcut": "ctrl+shift+d",
  *       "command": "/deploy staging",
  *       "description": "Deploy to staging"
  *     }
@@ -89,12 +89,12 @@ export default function hotkeyCommandsExtension(pi: ExtensionAPI) {
 		pi.registerShortcut(binding.shortcut as any, {
 			description: label,
 			handler: async (ctx) => {
-				if (!ctx.isIdle()) {
-					pi.sendUserMessage(cmd, { deliverAs: "followUp" });
-					ctx.ui.notify(`Queued: ${cmd}`, "info");
-				} else {
-					pi.sendUserMessage(cmd);
-				}
+				// Set the command text in the editor, then simulate Enter.
+				// This routes through the normal interactive input pipeline which
+				// includes extension command dispatch — unlike sendUserMessage()
+				// which bypasses command routing (expandPromptTemplates: false).
+				ctx.ui.setEditorText(cmd);
+				process.stdin.emit("data", "\r");
 			},
 		});
 	}
