@@ -89,12 +89,25 @@ export default function hotkeyCommandsExtension(pi: ExtensionAPI) {
 		pi.registerShortcut(binding.shortcut as any, {
 			description: label,
 			handler: async (ctx) => {
+				// Flash the status bar to show which hotkey fired
+				ctx.ui.setStatus(
+					"hotkey-commands",
+					ctx.ui.theme.fg("accent", `⌨ ${cmd}`),
+				);
 				// Set the command text in the editor, then simulate Enter.
 				// This routes through the normal interactive input pipeline which
 				// includes extension command dispatch — unlike sendUserMessage()
 				// which bypasses command routing (expandPromptTemplates: false).
 				ctx.ui.setEditorText(cmd);
 				process.stdin.emit("data", "\r");
+				// Revert status bar after 3 seconds
+				setTimeout(() => {
+					const count = config.bindings.length;
+					ctx.ui.setStatus(
+						"hotkey-commands",
+						ctx.ui.theme.fg("dim", `⌨ ${count} hotkey${count !== 1 ? "s" : ""}`),
+					);
+				}, 3000);
 			},
 		});
 	}
